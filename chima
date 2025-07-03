@@ -1,0 +1,61 @@
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt
+import seaborn as sb
+df= pd.read_csv("all_recs.csv",encoding ="unicode_escape")
+df.head()
+Date        Location        Victim        Industry        Actor Location        Actor        Motive        Type        Sub-Type        Year
+0        31/12/2022        Iran (Islamic Republic of)        State-run Iranian Websites        Public Administration        Undetermined        Undetermined        Protest        Disruptive        External Denial of Services        2022
+1        31/12/2022        United States of America        Housing Authority of the City of Los Angeles (...        Public Administration        Undetermined        LockBit 3.0        Financial        Exploitative        Undetermined        2022
+2        30/12/2022        Poland        Polish Parliament        Public Administration        Russian Federation        NoName057(16)        Protest        Disruptive        External Denial of Services        2022
+3        30/12/2022        United States of America        CentraState Healthcare System        Health Care and Social Assistance        Undetermined        Undetermined        Undetermined        Disruptive        Undetermined        2022
+4        30/12/2022        Iran (Islamic Republic of)        Iran Airlines        Transportation and Warehousing        Ukraine        rootkitsecurity        Protest        Disruptive        External Denial of Services        2022
+year_order =df['Year'].value_counts().index
+location_order =df['Location'].value_counts().index
+motive_order = df['Motive'].value_counts().index
+industry_order = df['Industry'].value_counts().index
+df.describe()
+Date        Location        Victim        Industry        Actor Location        Actor        Motive        Type        Sub-Type        Year
+count        10419        10419        10419        10419        10416        10419        10419        10419        10415        10420
+unique        2767        155        9519        21        76        956        10        5        77        11
+top        27/06/2017        United States of America        Undetermined        Public Administration        Undetermined        Undetermined        Financial        Exploitive        Exploitation of Application Server        2022
+freq        78        5110        14        2021        8269        6472        5781        5397        3616        1918
+df.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 10420 entries, 0 to 10419
+Data columns (total 10 columns):
+ #   Column          Non-Null Count  Dtype 
+---  ------          --------------  ----- 
+ 0   Date            10419 non-null  object
+ 1   Location        10419 non-null  object
+ 2   Victim          10419 non-null  object
+ 3   Industry        10419 non-null  object
+ 4   Actor Location  10416 non-null  object
+ 5   Actor           10419 non-null  object
+ 6   Motive          10419 non-null  object
+ 7   Type            10419 non-null  object
+ 8   Sub-Type        10415 non-null  object
+ 9   Year            10420 non-null  object
+dtypes: object(10)
+memory usage: 814.2+ KB
+plt.figure(figsize=(20,8))
+plt.title("Attack Frequency by year")
+sb.countplot(data=df, y='Year',order =year_order)
+plt.xticks(rotation=45)
+(array([   0.,  250.,  500.,  750., 1000., 1250., 1500., 1750., 2000.,
+        2250.]),
+ [Text(0.0, 0, '0'),
+  Text(250.0, 0, '250'),
+  Text(500.0, 0, '500'),
+  Text(750.0, 0, '750'),
+  Text(1000.0, 0, '1000'),
+  Text(1250.0, 0, '1250'),
+  Text(1500.0, 0, '1500'),
+  Text(1750.0, 0, '1750'),
+  Text(2000.0, 0, '2000'),
+  Text(2250.0, 0, '2250')])
+
+plt.figure(figsize=(10,6))
+plt.title("Attack by Industry")
+sb.countplot(data=df,y='Industry',order=industry_order)
+plt.xticks(rotation=15); 
